@@ -18,7 +18,8 @@ import About from './About';
 import "./App.css";
 
 class App extends Component {
-  state = { isLoaded : true , web3 : null, accounts : null , contract : null };
+
+ 
 
   componentDidMount = async () => {
     try {
@@ -31,11 +32,13 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
+      console.log("getId " + networkId);
       const deployedNetwork = ElectionContract.networks[networkId];
       const instance = new web3.eth.Contract(
         ElectionContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
+      console.log("instance " + instance)
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.x`
@@ -49,6 +52,20 @@ class App extends Component {
     }
   };
 
+  handleVoterAddress = (event) =>{
+    this.setState({VoterAddress : event.target.value})
+  }
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const address = this.state.VoterAddress;
+    const contract = this.state.contract;
+    // const response =  await contract.methods.Voters(address).call();
+ 
+    // console.log("response is " +response);
+
+
+  }
+
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -59,20 +76,29 @@ class App extends Component {
 
 
     // Get the value from the contract to prove it worked.
-    // const party1 = await contract.methods.Candidates(1).call();
-    // const party2 = await contract.methods.Candidates(2).call();
-    // const party3 = await contract.methods.Candidates(3).call();
+    const party1 = await contract.methods.Candidates(1).call();
+    const party2 = await contract.methods.Candidates(2).call();
+    const party3 = await contract.methods.Candidates(3).call();
+
+  
 
 // 0: "1"
 // 1: "Narendra Modi"
 // 2: "BJP"
 // 3: "0"
     
-    // Update state with the result.
-    // this.setState({ totalVoters: 1 , isLoaded:true , party1 : [party1[0] , party1[1] , party1[2]] , 
-    //   party2 : [party2[0] , party2[1] , party2[2]] ,
-    //   party3 : [party3[0] , party3[1] , party3[2]] });
+   // Update state with the result.
+    this.setState({ totalVoters: 1 , isLoaded:true , party1 : [party1[0] , party1[1] , party1[2]] , 
+      party2 : [party2[0] , party2[1] , party2[2]] ,
+      party3 : [party3[0] , party3[1] , party3[2]] });
   };
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoaded : false , web3 : null, accounts : null , contract : null , VoterAddress : ''
+    }
+  }
 
   render() {
     if (!this.state.isLoaded) {
@@ -82,8 +108,8 @@ class App extends Component {
       <div className="App">
 
         <div className="nav">
-          <NavLink exact to="/" activeClassName="active">Home</NavLink>
-          <NavLink to="/about" activeClassName="active">About</NavLink>
+          <NavLink exact to="/" activeClassName="active">Homepage</NavLink>
+          <NavLink to="/validateVoter" activeClassName="active">Validate Voter</NavLink>
         </div>
 
 
@@ -96,9 +122,18 @@ class App extends Component {
             >
               <Switch location={location}>
                 <Route exact path="/">
-                <Home />
+                <Home 
+                  party1={this.state.party1}
+                  party2={this.state.party2}
+                  party3={this.state.party3}
+                />
                 </Route>
-                <Route path="/about" component={About} />
+                <Route path="/validateVoter" >
+                  <About Value={this.state.VoterAddress}
+                   changeAddress={this.handleVoterAddress} 
+                   handleSubmit = {this.handleSubmit}
+                   />
+                </Route>
               </Switch>
             </CSSTransition>
           </TransitionGroup>

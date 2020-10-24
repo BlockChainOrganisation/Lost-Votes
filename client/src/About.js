@@ -1,13 +1,20 @@
 import React from 'react';
-import logo from './assets/download.jpg';
+// import logo from './assets/download.jpg';
 
-const About = () => {
+const About = (props) => {
     return(
         <div className="page">
             <section>
-                <img src={logo} className="App-logo" alt="logo" />
-                <h1>Use React Router and React Transition Group</h1>
-                <p>Alias laboriosam maiores autem nemo consectetur sed perspiciatis minus quibusdam dolorem ratione sapiente amet quia quis voluptates. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum culpa odio.</p>
+                <h1>Voters' Validation</h1>
+                <form onSubmit ={props.handleSubmit}>
+                    <label>Address:</label> <br />
+                    <input type ='text' value={props.Value} 
+                        onChange={props.changeAddress} />
+                        <br />
+
+                    <input type="submit" value="Check" />
+                </form>
+                
             </section>
         </div>
     )
