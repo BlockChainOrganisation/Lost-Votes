@@ -61,7 +61,12 @@ contract Election{
         addCandiate("Rahul Gandhi","Congress");
         addCandiate("Arvind Kejriwal" , "AAP");
         // addVoter(0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2); // should be added manually
-        // addVoter(0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db); 
+        // addVoter(0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db);
+        addVoter(0x6645bfD9dB7fA02DB9135D9D9786435Ac2440716); 
+        addVoter(0x99EAaA9b4CfCBf0Bf14529E320a977213c350Bf0); 
+        addVoter(0x025122Bd5F85Fe2fA519CB730FfAfAAF3E042250); 
+        addVoter(0xe2266A3674b7FecDaeA37e684D10B3b356F0ae12); 
+        addVoter(0xaF8c73521Abda48892a108e27702EF7e20c72D99); 
     }
     
     

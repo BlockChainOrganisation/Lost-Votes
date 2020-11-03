@@ -16,6 +16,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useFourThreeCardMediaStyles } from '@mui-treasury/styles/cardMedia/fourThree';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useGridStyles = makeStyles(({ breakpoints }) => ({
     root: {
@@ -90,9 +91,23 @@ export const VoteCard = (props) => {
     const styles3 = useStyles({ color: '#ff9900' });
     const [open, setOpen] = React.useState(false);
     const [metaCandidate, setMetaCandidate] = React.useState({ "name": "Loda", "number": -1 });
-    console.log(props.handleAgree)
     return (
         <>
+            <div className={{
+                width: '100%',
+                '& > * + *': {
+                    marginTop: 2,
+                },
+            }}>
+                {
+                    props.alertOpen ? props.voterStatus ? <Alert severity="success">
+                        <AlertTitle>Success</AlertTitle>
+                    </Alert> :
+                        <Alert severity="error">
+                            <AlertTitle>Error</AlertTitle>
+                        </Alert> : <></>
+                }
+            </div>
             <Dialog
                 open={open}
                 onClose={() => setOpen(false)}
@@ -114,7 +129,7 @@ export const VoteCard = (props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Grid classes={gridStyles} container spacing={4} wrap={'nowrap'} style={{ "margin-top": "10px" }}>
+            <Grid classes={gridStyles} container spacing={4} wrap={'nowrap'} style={{ "marginTop": "10px" }}>
                 <Grid item>
                     <CustomCard
                         classes={styles}

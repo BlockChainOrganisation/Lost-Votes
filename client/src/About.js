@@ -14,10 +14,15 @@ const About = (props) => {
     const [status, setStatus] = React.useState(false);
     const [value, setValue] = React.useState("");
 
-    const handleClick = () => {
-        setStatus(props.handleInput(value))
+    const handleClick = async () => {
+        let ret = await props.handleInput(value)
+        setStatus(ret)
         setOpen(true)
     }
+
+    const getMsg = async () => {
+        return await status
+    } 
 
     return (
         <div className="page">
@@ -30,9 +35,7 @@ const About = (props) => {
                 <DialogTitle id="alert-dialog-title">{"Confirmation?"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-">
-                        {
-                            status ? "You Can Vote. Congrats !" : "Sorry, You cannot vote in this election"
-                        }
+                        {status === true ? "You Can Vote. Congrats !" : "Sorry, You cannot vote in this election"}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -47,7 +50,7 @@ const About = (props) => {
                     <br/>
                     <br/>
                     <Button variant="contained" color="primary" onClick={handleClick}>
-                        Primary
+                        Check
                     </Button>
             </section>
         </div>

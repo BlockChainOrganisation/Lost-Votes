@@ -14,6 +14,7 @@ import {
 
 import Home from './Home';
 import About from './About';
+import Button from '@material-ui/core/Button';
 import VoteAppBar from './components/VoteAppBar.js'
 import VoteCard from './components/VoteCard.js'
 
@@ -62,14 +63,65 @@ class App extends Component {
     const address = this.state.VoterAddress;
     const contract = this.state.contract;
     // const response =  await contract.methods.Voters(address).call();
+  }
 
-    // console.log("response is " +response);
+  handleInput = async (val) => {
+    const contract = this.state.contract;
+    try {
+      const response = await contract.methods.Voters(val).call();
+      return response.canVote;
+    } catch (error) {
+      console.log(error)
+      return false;
+    }
+  }
 
+
+
+  handleVote = async (number) => {
+    const contract = this.state.contract;
+    try {
+      const address = await window.ethereum.request({ method: "eth_accounts" })
+      console.log(address[0])
+      const response = await contract.methods.vote(number).send({ "from": address[0] });
+      console.log(response)
+      this.setState({ voterStatus: true })
+      this.setState({ alertOpen: true })
+    } catch (error) {
+      console.log({ error })
+      this.setState({ voterStatus: false })
+      this.setState({ alertOpen: true })
+    }
+  }
+
+
+  checkResult = async (event) => {
+    event.preventDefault();
+    const { contract } = this.state;
+    try {
+      const address = await window.ethereum.request({ method: "eth_accounts" })
+      const response1 = await contract.methods.calculateVotes(1).call({ "from": address[0] });
+      const response2 = await contract.methods.calculateVotes(2).call({ "from": address[0] });
+      const response3 = await contract.methods.calculateVotes(3).call({ "from": address[0] });
+      console.log({response1})
+      this.setState({
+        totalPartyVotes: [response1, response2, response3]
+      })
+    } catch (error) {
+      console.log(error);
+    }
 
   }
 
+
   runExample = async () => {
     const { accounts, contract } = this.state;
+    // try {
+    //   const address = await window.ethereum.request({ method: "eth_accounts" })[0]
+    //   const reponse = await contract.methods.vote(1).send({ from: address });
+    // } catch (error) {
+    //   console.log({ error })
+    // }
 
     // Stores a given value, 5 by default.
     // await contract.methods.Candidates(1).call();
@@ -100,7 +152,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: false, web3: null, accounts: null, contract: null, VoterAddress: ''
+      isLoaded: false, web3: null, accounts: null, contract: null, VoterAddress: '', voterStatus: false, alertOpen: false, totalPartyVotes: [0, 0, 0]
     }
   }
 
@@ -114,6 +166,7 @@ class App extends Component {
         <div className="nav">
           <NavLink exact to="/" activeClassName="active">Homepage</NavLink>
           <NavLink to="/validateVoter" activeClassName="active">Validate Voter</NavLink>
+          <NavLink to="/results" activeClassName="active">Results</NavLink>
         </div>
 
 
@@ -126,15 +179,30 @@ class App extends Component {
             >
               <Switch location={location}>
                 <Route exact path="/">
-                <VoteCard handleAgree={(meta) => console.log(meta)}/>
+                  <VoteCard handleAgree={this.handleVote} voterStatus={this.state.voterStatus} alertOpen={this.state.alertOpen} />
                 </Route>
                 <Route path="/validateVoter" >
                   <About
                     // value={this.state.VoterAddress}
                     // changeAddress={this.handleVoterAddress}
                     // handleSubmit={this.handleSubmit}
-                    handleInput={(v) => {console.log(v); return true;}}
+                    handleInput={this.handleInput
+                    }
                   />
+                </Route>
+                <Route path="/results" >
+                  <br />
+                  <h1> BJP (Narendra Modi) - {this.state.totalPartyVotes[0]} </h1>
+                  <br />
+                  <h1> Congress (Rahul Gandhi) - {this.state.totalPartyVotes[1]} </h1>
+                  <br />
+                  <h1> AAP (Arvind Kejriwal) - {this.state.totalPartyVotes[2]} </h1>
+                  <br />
+                  <br />
+                  <Button variant="contained" color="primary" onClick={this.checkResult}>
+                    Check Result
+                  </Button>
+                  <br />
                 </Route>
               </Switch>
             </CSSTransition>
