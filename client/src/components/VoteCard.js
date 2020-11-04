@@ -52,13 +52,13 @@ const useStyles = makeStyles(() => ({
         };
     },
     title: {
-        fontFamily: 'Keania One',
+        // fontFamily: 'Keania One',
         fontSize: '2rem',
         color: '#fff',
         textTransform: 'uppercase',
     },
     subtitle: {
-        fontFamily: 'Montserrat',
+        // fontFamily: 'Montserrat',
         color: '#fff',
         opacity: 0.87,
         marginTop: '2rem',

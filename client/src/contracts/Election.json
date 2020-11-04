@@ -7674,10 +7674,81 @@
       "links": {},
       "address": "0xC8c9e520be2b31C5fd9835681A0c60a22939B60e",
       "transactionHash": "0x8792d6f7a4ad1708705017a3add045b9285edfb054a965e9535cb68c3d76e0be"
+    },
+    "1604468232612": {
+      "events": {
+        "0xe64f834082661dd9ed89427b87edb6270fd6dad17198b0938f0edd058914c87f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "candidate_number",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "candidateName",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "candidateParty",
+              "type": "string"
+            }
+          ],
+          "name": "CandidateAdded",
+          "type": "event"
+        },
+        "0x2b77cefdcd8726daf4c7109ee1b2f7b6e696783da95bccd39ee47478e017d067": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "electionEnded",
+              "type": "string"
+            }
+          ],
+          "name": "ElectionEnded",
+          "type": "event"
+        },
+        "0x16a9aa39af49f169911e977347975198c503525f7240d6892a626f0227642fce": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "voter",
+              "type": "address"
+            }
+          ],
+          "name": "Voted",
+          "type": "event"
+        },
+        "0xa636f4a11e2d3ba7f89d042ecb0a6b886716e98cd49d8fd876ee0f73bced42b8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "voter",
+              "type": "address"
+            }
+          ],
+          "name": "VoterAdded",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x4618ce66FBaf76d80574179B162c1BFc25E3ebFb",
+      "transactionHash": "0x794da084bd70715e49569383b968ac333d0b31819a638d39c5733bc158a1e862"
     }
   },
   "schemaVersion": "3.3.1",
-  "updatedAt": "2020-11-03T17:18:28.568Z",
+  "updatedAt": "2020-11-04T05:37:40.670Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

@@ -59,22 +59,18 @@ export const ResultCard = (props) => {
     <Card className={cx(styles.card, shadowStyles.root)}>
       <CardContent>
         <Avatar className={styles.avatar} src={props.image} />
-  <h3 className={styles.heading}>{props.name}</h3>
-        <span className={styles.subheader}>Poland</span>
+        <h3 className={styles.heading}>{props.name}</h3>
+        <span className={styles.subheader}>{props.party}</span>
       </CardContent>
       <Divider light />
       <Box display={'flex'}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Followers</p>
-          <p className={styles.statValue}>6941</p>
-        </Box>
-        <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Following</p>
-          <p className={styles.statValue}>12</p>
+          <p className={styles.statLabel}>Votes</p>
+          <p className={styles.statValue}>{props.vote}</p>
         </Box>
       </Box>
     </Card>
   );
-});
+};
 
 export default ResultCard

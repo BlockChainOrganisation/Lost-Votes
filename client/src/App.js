@@ -17,6 +17,9 @@ import About from './About';
 import Button from '@material-ui/core/Button';
 import VoteAppBar from './components/VoteAppBar.js'
 import VoteCard from './components/VoteCard.js'
+import ResultCard from './components/ResultCard.js'
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 import "./App.css";
 
@@ -103,7 +106,7 @@ class App extends Component {
       const response1 = await contract.methods.calculateVotes(1).call({ "from": address[0] });
       const response2 = await contract.methods.calculateVotes(2).call({ "from": address[0] });
       const response3 = await contract.methods.calculateVotes(3).call({ "from": address[0] });
-      console.log({response1})
+      console.log({ response1 })
       this.setState({
         totalPartyVotes: [response1, response2, response3]
       })
@@ -192,11 +195,27 @@ class App extends Component {
                 </Route>
                 <Route path="/results" >
                   <br />
-                  <h1> BJP (Narendra Modi) - {this.state.totalPartyVotes[0]} </h1>
+                  {/* <h1> BJP (Narendra Modi) - {this.state.totalPartyVotes[0]} </h1>
                   <br />
                   <h1> Congress (Rahul Gandhi) - {this.state.totalPartyVotes[1]} </h1>
                   <br />
-                  <h1> AAP (Arvind Kejriwal) - {this.state.totalPartyVotes[2]} </h1>
+                  <h1> AAP (Arvind Kejriwal) - {this.state.totalPartyVotes[2]} </h1> */}
+                  {/* <div className = "display-result"> */}
+                  <Container>
+                    <Grid container justify="center" spacing={3} direction="row" id="display-result">
+                      <Grid item xs={12}>
+                        <ResultCard name="Narendra Modi" party="BJP" vote={this.state.totalPartyVotes[0]} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <ResultCard name="Rahul Gandhi" party="Congress" vote={this.state.totalPartyVotes[1]} />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <ResultCard name="Arvind Kejriwal" party="AAP" vote={this.state.totalPartyVotes[2]} />
+                      </Grid>
+                    </Grid>
+                  </Container>
+                  {/* </div> */}
+                  
                   <br />
                   <br />
                   <Button variant="contained" color="primary" onClick={this.checkResult}>

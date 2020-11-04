@@ -73,4 +73,7 @@ section {
     opacity: 0;
     transition: opacity 150ms linear;
 }
-
+#display-result {
+  /* flex-wrap ; nowrap; */
+  flex-wrap: nowrap;
+}
